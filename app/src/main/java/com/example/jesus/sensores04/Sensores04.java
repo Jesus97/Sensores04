@@ -13,15 +13,17 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class Sensores04 extends AppCompatActivity implements SensorEventListener{
-int contador;
+    SensorManager sensorManager;
+    Sensor campo;
+    int contador=0;
 boolean continuar = true;
 double x =0;
 double y=0;
 double z=0;
 double a=0;
 double amax=0;
-double campoTierraMax = SensorManager.MAGNETIC_FIELD_EARTH_MAX;
-double campoTierraMin = SensorManager.MAGNETIC_FIELD_EARTH_MIN;
+double campoTierraMax = sensorManager.MAGNETIC_FIELD_EARTH_MAX;
+double campoTierraMin = sensorManager.MAGNETIC_FIELD_EARTH_MIN;
 TextView camX;
 TextView camY;
 TextView camZ;
@@ -42,9 +44,9 @@ TextView cont;
         campoTierra = (TextView) findViewById(R.id.campoTierra);
         cont = (TextView) findViewById(R.id.contador);
 
-        SensorManager SensorManager = (android.hardware.SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        Sensor campo = SensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        SensorManager.registerListener(this,campo,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager = (android.hardware.SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        campo = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sensorManager.registerListener(this,campo,SensorManager.SENSOR_DELAY_NORMAL);
 
         new MiAsyncTask().execute();
     }
@@ -100,7 +102,7 @@ TextView cont;
             campoMagneticoTotal.setText("" + a);
             campoTerrestre.setText("" + amax);
             campoTierra.setText(""+campoTierraMin+"-"+campoTierraMax);
-            //cont.setText(contador);
+            cont.setText(" "+contador);
         }
     }
 }
